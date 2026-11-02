@@ -1,0 +1,10 @@
+---
+description: FreshGate Multi-Agent Rules
+globs: *
+alwaysApply: true
+---
+
+Follow AGENTS.md in the repository root.
+All work must follow docs/SPEC.md as the frozen source of truth.
+Run all tests before handoff.
+Never log secrets or full prompt text.

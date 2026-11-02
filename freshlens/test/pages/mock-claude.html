@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mock Claude UI</title>
+    <style>
+      body { background: #262624; color: #fbfbf9; font-family: sans-serif; padding: 20px; }
+      .font-claude-message { line-height: 1.6; }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div data-test-render-count="4">
+        <div data-is-streaming="false">
+          <div class="font-claude-message">
+            <p>Claude 3.5 Sonnet costs $3 per million input tokens and $15 per million output tokens. Prompt caching is not supported on this model.</p>
+          </div>
+        </div>
+      </div>
+      <div contenteditable="true" aria-label="Write your prompt to Claude" class="ProseMirror"></div>
+    </div>
+  </body>
+</html>

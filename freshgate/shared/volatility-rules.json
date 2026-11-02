@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "categories": {
+    "pricing": {
+      "half_life_days": 45,
+      "claim_cache_ttl_s": 21600,
+      "tavily_topic": "general",
+      "time_range": null,
+      "max_age_hours": 24,
+      "regex": "\\b(price|pricing|cost|costs|plan|plans|quota|quotas|tier|tiers|free tier|subscription|fee|fees|rate limit|rate limits|per month|per year|per token)\\b",
+      "meaning": "prices, plans, quotas, rate limits, free tiers"
+    },
+    "version_release": {
+      "half_life_days": 60,
+      "claim_cache_ttl_s": 43200,
+      "tavily_topic": "general",
+      "time_range": null,
+      "max_age_hours": 24,
+      "regex": "\\b(version|release|released|v?[0-9]+\\.[0-9]+(\\.[0-9]+)?|latest version|deprecated|deprecation|sunset|model name|update|patch)\\b",
+      "meaning": "versions, releases, deprecations, model names, 'latest'"
+    },
+    "leadership_role": {
+      "half_life_days": 365,
+      "claim_cache_ttl_s": 86400,
+      "tavily_topic": "news",
+      "time_range": "year",
+      "max_age_hours": null,
+      "regex": "\\b(CEO|CTO|CFO|COO|president|prime minister|minister|chairman|founder|who leads|governor|director)\\b",
+      "meaning": "CEO, president, officeholder, who leads X"
+    },
+    "law_policy": {
+      "half_life_days": 365,
+      "claim_cache_ttl_s": 172800,
+      "tavily_topic": "general",
+      "time_range": null,
+      "max_age_hours": null,
+      "regex": "\\b(law|act|regulation|policy|tax rate|tax bracket|eligibility|legal|compliance|rule|mandate|directive)\\b",
+      "meaning": "laws, regulations, tax rates, eligibility rules"
+    },
+    "statistic_metric": {
+      "half_life_days": 180,
+      "claim_cache_ttl_s": 259200,
+      "tavily_topic": "general",
+      "time_range": null,
+      "max_age_hours": null,
+      "regex": "\\b(population|users|active users|market cap|market capitalization|revenue|gdp|metric|benchmark|benchmark score)\\b",
+      "meaning": "populations, user counts, market caps, benchmark numbers"
+    },
+    "event_status": {
+      "half_life_days": 14,
+      "claim_cache_ttl_s": 3600,
+      "tavily_topic": "news",
+      "time_range": "month",
+      "max_age_hours": 1,
+      "regex": "\\b(outage|incident|availability|available now|still available|status|schedule|game score|ongoing|live stream|conference)\\b",
+      "meaning": "ongoing events, outages, availability, schedules, scores"
+    },
+    "record_ranking": {
+      "half_life_days": 365,
+      "claim_cache_ttl_s": 604800,
+      "tavily_topic": "general",
+      "time_range": null,
+      "max_age_hours": null,
+      "regex": "\\b(record|ranking|rankings|largest|fastest|tallest|richest|most popular|number one|#1|world record)\\b",
+      "meaning": "records, rankings, 'largest', '#1'"
+    },
+    "other_volatile": {
+      "half_life_days": 120,
+      "claim_cache_ttl_s": 21600,
+      "tavily_topic": "general",
+      "time_range": null,
+      "max_age_hours": null,
+      "regex": "\\b(current|currently|now|recent|recently|this year|as of)\\b",
+      "meaning": "other time-dependent facts"
+    },
+    "evergreen": {
+      "half_life_days": null,
+      "claim_cache_ttl_s": 2592000,
+      "tavily_topic": null,
+      "time_range": null,
+      "max_age_hours": null,
+      "regex": "\\b(what is|explain|define|definition|history of|formula for|how to calculate|prove that|theorem)\\b",
+      "meaning": "stable facts: NOT verified, reported as skipped_evergreen"
+    }
+  },
+  "prompt_volatility_classes": {
+    "realtime": {
+      "suggested_cache_ttl_s": null,
+      "no_store": true,
+      "weight": 100,
+      "cues_regex": "\\b(right now|today|tonight|live|breaking|score|stock price|live status|current outage)\\b"
+    },
+    "high": {
+      "suggested_cache_ttl_s": 3600,
+      "no_store": false,
+      "weight": 80,
+      "cues_regex": "\\b(latest|current|currently|price|pricing|cost|costs|version|release|who is the CEO|this year|changelog)\\b"
+    },
+    "medium": {
+      "suggested_cache_ttl_s": 86400,
+      "no_store": false,
+      "weight": 60,
+      "cues_regex": "\\b(policy|law|rate|rates|statistics|population|ranking|regulations|tax|bracket|gdp|inflation|statutory)\\b"
+    },
+    "low": {
+      "suggested_cache_ttl_s": 604800,
+      "no_store": false,
+      "weight": 40,
+      "cues_regex": "\\b(overview|guide|architecture|tutorial|comparison|features|benefits|patterns|tradeoffs|practices)\\b"
+    },
+    "static": {
+      "suggested_cache_ttl_s": 2592000,
+      "no_store": false,
+      "weight": 20,
+      "cues_regex": "\\b(definition|what is|meaning of|math|history|algorithm|syntax|proof|prove|derive|reverse a singly)\\b"
+    }
+  }
+}

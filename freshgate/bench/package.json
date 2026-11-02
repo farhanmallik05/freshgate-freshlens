@@ -1,0 +1,21 @@
+{
+  "name": "@freshgate/bench",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "bench": "tsx run.ts --limit 10 --mock",
+    "bench:full": "tsx run.ts",
+    "evaluate": "tsx evaluate.ts"
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  }
+}

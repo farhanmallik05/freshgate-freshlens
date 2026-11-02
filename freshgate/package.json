@@ -1,0 +1,21 @@
+{
+  "name": "freshgate-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FreshGate: Bifrost Gateway Plugin & Freshness Verification Engine",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "setup": "pnpm -C engine install && pnpm -C dashboard install && pnpm -C demo install",
+    "check": "pnpm -C engine check && pnpm -C engine test",
+    "dev": "pnpm -C engine dev",
+    "up": "docker compose -f deploy/docker-compose.yml --profile mock up -d",
+    "down": "docker compose -f deploy/docker-compose.yml down",
+    "demo": "pnpm -C demo dev",
+    "bench": "pnpm -C bench run-bench",
+    "clean": "rimraf node_modules engine/node_modules dashboard/node_modules demo/node_modules engine/dist dashboard/.next data"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}

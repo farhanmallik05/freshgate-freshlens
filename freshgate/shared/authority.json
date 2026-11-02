@@ -1,0 +1,94 @@
+{
+  "version": "1.0.0",
+  "tiers": {
+    "official": {
+      "weight": 1.0,
+      "patterns": [
+        "*.gov",
+        "*.mil",
+        "*.edu",
+        "docs.*",
+        "api.*",
+        "developer.*",
+        "developers.*",
+        "blog.*"
+      ],
+      "domains": [
+        "github.com",
+        "openai.com",
+        "anthropic.com",
+        "google.com",
+        "deepmind.google",
+        "microsoft.com",
+        "apple.com",
+        "amazon.com",
+        "aws.amazon.com",
+        "cloudflare.com",
+        "vercel.com",
+        "nextjs.org",
+        "react.dev",
+        "nodejs.org",
+        "python.org",
+        "golang.org",
+        "rust-lang.org",
+        "stripe.com",
+        "tavily.com",
+        "getbifrost.ai",
+        "fastapi.tiangolo.com",
+        "pypi.org",
+        "npmjs.com",
+        "crates.io",
+        "huggingface.co",
+        "meta.com",
+        "nvidia.com"
+      ]
+    },
+    "reputable": {
+      "weight": 0.8,
+      "domains": [
+        "reuters.com",
+        "apnews.com",
+        "bloomberg.com",
+        "techcrunch.com",
+        "theverge.com",
+        "wired.com",
+        "arstechnica.com",
+        "wsj.com",
+        "ft.com",
+        "nytimes.com",
+        "bbc.com",
+        "nature.com",
+        "sciencedirect.com",
+        "wikipedia.org",
+        "investopedia.com",
+        "cnbc.com",
+        "forbes.com",
+        "zdnet.com",
+        "venturebeat.com",
+        "siliconangle.com",
+        "engadget.com"
+      ]
+    },
+    "community": {
+      "weight": 0.5,
+      "domains": [
+        "reddit.com",
+        "quora.com",
+        "medium.com",
+        "dev.to",
+        "stackoverflow.com",
+        "stackexchange.com",
+        "news.ycombinator.com",
+        "hashnode.dev",
+        "substack.com",
+        "linkedin.com",
+        "x.com",
+        "twitter.com"
+      ]
+    },
+    "unknown": {
+      "weight": 0.3,
+      "domains": []
+    }
+  }
+}

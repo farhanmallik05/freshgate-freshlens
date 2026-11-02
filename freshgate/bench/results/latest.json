@@ -1,0 +1,60 @@
+{
+  "evaluated_at": "2026-11-02T16:42:55.839Z",
+  "total_prompts": 10,
+  "total_runs": 30,
+  "metrics": {
+    "precision": 1,
+    "recall": 1,
+    "f1": 1,
+    "ci_precision": [
+      1,
+      1
+    ],
+    "ci_recall": [
+      1,
+      1
+    ],
+    "ci_f1": [
+      1,
+      1
+    ],
+    "evergreen_fp_rate": 0
+  },
+  "by_model": [
+    {
+      "model": "gpt-4o",
+      "total": 10,
+      "stale_rate": 1,
+      "detected_rate": 1,
+      "avg_freshness": 28
+    },
+    {
+      "model": "claude-3-5-sonnet",
+      "total": 10,
+      "stale_rate": 0.4,
+      "detected_rate": 0.4,
+      "avg_freshness": 73
+    },
+    {
+      "model": "llama-3.1-70b",
+      "total": 10,
+      "stale_rate": 1,
+      "detected_rate": 1,
+      "avg_freshness": 32
+    }
+  ],
+  "by_category": [
+    {
+      "category": "pricing",
+      "total": 18,
+      "stale_rate": 0.667,
+      "avg_freshness": 51.7
+    },
+    {
+      "category": "version_release",
+      "total": 12,
+      "stale_rate": 1,
+      "avg_freshness": 33.3
+    }
+  ]
+}

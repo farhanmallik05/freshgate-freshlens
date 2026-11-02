@@ -1,0 +1,10 @@
+---
+description: FreshLens Monorepo Rules
+globs: **/*
+alwaysApply: true
+---
+
+Follow AGENTS.md strictly.
+SPEC.md is the single source of truth for contracts.
+Do not introduce stub implementations or mock data in production paths.
+Verify all changes by running actual tests.

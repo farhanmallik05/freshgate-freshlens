@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js & WXT build outputs
+.next/
+out/
+.wxt/
+dist/
+build/
+*.so
+
+# Databases, local data & caches
+*.db
+*.db-wal
+*.db-shm
+data/*.db
+.cache/
+bench/cache/
+
+# Coverage & test reports
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+*.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/

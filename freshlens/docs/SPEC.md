@@ -1,0 +1,161 @@
+# FreshLens Specification v1.0 (Canonical Contract)
+
+This document is the authoritative specification for the FreshLens Chrome extension. Changes to this contract require an explicit entry in `docs/CHANGELOG.md`.
+
+---
+
+## 1. Engine API Subset
+FreshLens consumes the FreshGate Engine HTTP API (source: `freshgate/docs/SPEC.md`):
+
+### 1.1 POST /v1/verify
+- **Headers:** `Authorization: Bearer <API_KEY>`, `Content-Type: application/json`
+- **Request Body (VerifyRequest):**
+  ```json
+  {
+    "text": "verbatim assistant text (1..20000 chars)",
+    "context": {
+      "source": "extension",
+      "model": "gpt-4o",
+      "prompt": "optional user prompt string"
+    },
+    "options": {
+      "max_claims": 5,
+      "depth": "fast",
+      "nocache": false
+    }
+  }
+  ```
+- **Response Body (VerifyResponse):**
+  ```json
+  {
+    "id": "vrf_<ulid>",
+    "status": "completed",
+    "created_at": "ISO-8601",
+    "latency_ms": 350,
+    "overall": {
+      "score": 42,
+      "band": "stale",
+      "claims_total": 4,
+      "claims_checked": 3,
+      "stale_count": 2,
+      "unverifiable_count": 0
+    },
+    "claims": [
+      {
+        "claim": {
+          "id": "c1",
+          "text": "Next.js 14 is the latest version",
+          "span": { "start": 10, "end": 42 },
+          "normalized": "The latest release of Next.js is version 14",
+          "category": "version_release",
+          "claimed_as_of": "2024-01-01",
+          "entities": ["Next.js"],
+          "query": "Next.js latest version release",
+          "official_domains": ["nextjs.org"],
+          "prior": 0.85
+        },
+        "verdict": "stale",
+        "freshness": 20,
+        "band": "stale",
+        "correction": "Next.js 15 is the latest version released in October 2024",
+        "evidence": [
+          {
+            "id": "e1",
+            "url": "https://nextjs.org/blog/next-15",
+            "domain": "nextjs.org",
+            "title": "Next.js 15 Release Notes",
+            "snippet": "Next.js 15 is now generally available...",
+            "published_date": "2024-10-21T00:00:00.000Z",
+            "retrieved_at": "2026-11-02T00:00:00.000Z",
+            "authority": "official",
+            "score": 0.98
+          }
+        ],
+        "supporting_evidence_ids": ["e1"],
+        "judge_confidence": 0.95,
+        "reasoning": "Next.js 15 was released, superseding Next.js 14.",
+        "cache": { "hit": true, "age_s": 3600 },
+        "status": "ok"
+      }
+    ],
+    "corrected_text": "verbatim text with corrections applied or appended",
+    "usage": {
+      "tavily_credits": 1,
+      "llm_tokens": { "in": 250, "out": 120 },
+      "cache_hits": 1
+    }
+  }
+  ```
+
+### 1.2 GET /healthz
+- Verifies server liveliness. Returns `{"status": "ok", "service": "freshgate-engine"}`.
+
+---
+
+## 2. Background <-> Content Script Message Protocol
+
+All internal extension messages are JSON objects validated with Zod:
+
+| Message Type | Direction | Payload | Description |
+|---|---|---|---|
+| `CHECK_MESSAGE` | Content -> BG | `{ id: string, text: string, site: string, messageId: string, depth?: "fast" \| "thorough" }` | Request verification of an assistant message |
+| `CHECK_SELECTION` | Content/Menu -> BG | `{ id: string, text: string }` | Request verification of highlighted user selection |
+| `GET_SETTINGS` | Any -> BG | `{}` | Retrieve active settings |
+| `SETTINGS_CHANGED` | Options/Popup -> BG/Content | `{ settings: ExtensionSettings }` | Broadcast updated settings |
+| `RESULT` | BG -> Content | `{ messageId: string, response: VerifyResponse }` | Verification result payload |
+| `ERROR` | BG -> Content | `{ messageId: string, code: string, message: string }` | Structured error event |
+
+---
+
+## 3. Extension Settings Schema
+```ts
+interface ExtensionSettings {
+  engineUrl: string;             // default: "http://localhost:3001"
+  apiKey: string;                // default: ""
+  depth: "fast" | "thorough";    // default: "fast"
+  autoCheck: {
+    chatgpt: boolean;            // default: true
+    claude: boolean;             // default: true
+    demo: boolean;               // default: true
+  };
+  maxClaims: number;             // default: 5 (1..10)
+  includePrompt: boolean;        // default: false (Privacy-first)
+  demoMode: boolean;             // default: true (Offline-ready for hackathon)
+  historySize: number;           // default: 20
+  minMessageLength: number;      // default: 80
+  ignoreCodeBlocks: boolean;     // default: true
+}
+```
+
+---
+
+## 4. UX States & Badge Semantics
+1. **`idle`**: Message detected, auto-check disabled. Shows discreet "Check freshness" button.
+2. **`checking`**: Animated skeleton pill with staged status: "Extracting claims..." -> "Verifying live...".
+3. **`done`**: Score ring (0-100) + label (e.g. `82 Fresh · 1 Stale`).
+4. **`empty`**: "No time-sensitive claims found" (evergreen facts).
+5. **`error`**: User-friendly message mapped to error taxonomy (offline, unauthorized, rate-limited, timeout).
+6. **`outdated`**: Message was edited or regenerated by the host application.
+
+---
+
+## 5. Highlight Semantics
+Highlights NEVER rely on color alone (WCAG 2.1 AA accessible):
+- **Fresh (`>= 75`):** Light emerald background (`#10b98120`), **solid** emerald underline (`#059669`).
+- **Aging (`45 - 74`):** Light amber background (`#f59e0b25`), **dashed** amber underline (`#d97706`).
+- **Stale (`< 45`):** Light rose background (`#ef444425`), **wavy** red underline (`#dc2626`).
+
+---
+
+## 6. Privacy Contract
+- **Default Behavior:** ONLY the clean assistant text is transmitted.
+- **Never Transmitted:** Current URL, page title, conversation ID, user prompt text (unless `includePrompt` explicitly enabled in Options), auth cookies, or session tokens.
+- **Outbound Traffic:** Only contacts the explicitly configured `engineUrl`. Zero telemetry, zero analytics, zero external CDNs.
+
+---
+
+## 7. Manifest V3 Permissions Allowlist
+Strictly limited to:
+- Permissions: `storage`, `contextMenus`, `activeTab`, `scripting`.
+- Host Permissions: `https://chatgpt.com/*`, `https://chat.openai.com/*`, `https://claude.ai/*`, `http://localhost:*/*`, `http://127.0.0.1:*/*`.
+- Optional Host Permissions: `https://*/*`, `http://*/*` (requested on-demand for custom engine URLs).

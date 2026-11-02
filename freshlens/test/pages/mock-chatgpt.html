@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mock ChatGPT UI</title>
+    <style>
+      body { background: #212121; color: #ececec; font-family: sans-serif; padding: 20px; }
+      .conversation-turn { margin-bottom: 24px; padding: 12px; border-radius: 8px; }
+      [data-message-author-role="assistant"] { background: #2f2f2f; padding: 16px; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <div id="__next">
+      <main>
+        <article data-testid="conversation-turn-3" class="conversation-turn">
+          <div data-message-author-role="assistant" data-message-id="msg-101">
+            <p>Next.js 14 is the latest stable release. It includes the App Router architecture.</p>
+          </div>
+        </article>
+        <form>
+          <textarea id="prompt-textarea" placeholder="Ask anything..."></textarea>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>

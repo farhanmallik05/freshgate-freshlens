@@ -1,0 +1,26 @@
+diff --git a/go.work b/go.work
+index 1000..2000 100644
+--- a/go.work
++++ b/go.work
+@@ -5,3 +5,4 @@ use (
+ 	./plugins/mocker
+ 	./plugins/semanticcache
++	./plugins/freshgate
+ )
+diff --git a/transports/bifrost-http/plugins.go b/transports/bifrost-http/plugins.go
+index 1000..2000 100644
+--- a/transports/bifrost-http/plugins.go
++++ b/transports/bifrost-http/plugins.go
+@@ -10,6 +10,7 @@ import (
+ 	"github.com/maximhq/bifrost/plugins/jsonparser"
+ 	"github.com/maximhq/bifrost/plugins/mocker"
+ 	"github.com/maximhq/bifrost/plugins/semanticcache"
++	"github.com/freshgate/freshgate-plugin"
+ )
+ 
+ func registerBuiltinPlugins(mgr *plugin.Manager) {
+@@ -20,4 +21,5 @@ func registerBuiltinPlugins(mgr *plugin.Manager) {
+ 	mgr.Register("mocker", mocker.New())
+ 	mgr.Register("semantic_cache", semanticcache.New())
++	mgr.Register("freshgate", freshgate.NewFreshGatePlugin())
+ }

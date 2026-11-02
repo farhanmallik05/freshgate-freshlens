@@ -1,0 +1,60 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "FreshGate Engine API",
+    "version": "1.0.0",
+    "description": "Real-time temporal claim extraction and verification engine"
+  },
+  "paths": {
+    "/healthz": {
+      "get": {
+        "summary": "Health check"
+      }
+    },
+    "/readyz": {
+      "get": {
+        "summary": "Readiness check"
+      }
+    },
+    "/v1/classify-prompt": {
+      "post": {
+        "summary": "Prompt volatility classification"
+      }
+    },
+    "/v1/extract": {
+      "post": {
+        "summary": "Claim extraction"
+      }
+    },
+    "/v1/verify": {
+      "post": {
+        "summary": "Synchronous verification"
+      }
+    },
+    "/v1/verify/async": {
+      "post": {
+        "summary": "Asynchronous verification queue"
+      }
+    },
+    "/v1/verifications/{id}": {
+      "get": {
+        "summary": "Get verification status or result"
+      }
+    },
+    "/v1/verifications": {
+      "get": {
+        "summary": "List verifications with pagination"
+      }
+    },
+    "/v1/stats": {
+      "get": {
+        "summary": "Aggregated telemetry and KPI statistics"
+      }
+    },
+    "/v1/events": {
+      "get": {
+        "summary": "Server-Sent Events telemetry stream"
+      }
+    }
+  }
+}

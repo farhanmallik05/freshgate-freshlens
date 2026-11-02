@@ -1,0 +1,40 @@
+{
+  "server": {
+    "port": 8080,
+    "host": "0.0.0.0"
+  },
+  "providers": [
+    {
+      "name": "openai",
+      "type": "openai",
+      "api_key": "${OPENAI_API_KEY}"
+    }
+  ],
+  "vector_store": {
+    "type": "valkey",
+    "host": "valkey",
+    "port": 6379
+  },
+  "plugins": [
+    {
+      "name": "freshgate",
+      "placement": "pre_builtin",
+      "order": 0,
+      "config": {
+        "engine_url": "http://engine:8787",
+        "default_mode": "async",
+        "timeout_ms": 4000,
+        "max_claims": 5,
+        "min_chars": 120,
+        "worker_pool": 8,
+        "queue_size": 256,
+        "breaker": {
+          "failures": 5,
+          "open_s": 30
+        },
+        "correction_style": "append",
+        "verify_cache_hits": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build artifacts
+dist/
+build/
+.next/
+out/
+*.so
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Databases & caches
+data/
+*.db
+*.db-wal
+*.db-shm
+.cache/
+bench/cache/
+
+# Coverage & test reports
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+!.vscode/extensions.json
+.idea/

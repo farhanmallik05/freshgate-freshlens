@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# WXT build outputs
+.wxt/
+.output/
+dist/
+
+# Test coverage & logs
+coverage/
+*.log
+
+# Environment & local state
+.env
+.env.local
+.DS_Store
+Thumbs.db
