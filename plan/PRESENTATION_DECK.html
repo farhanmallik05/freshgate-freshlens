@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshGate + FreshLens — Hackathon Pitch Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --card-bg: #121215;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(255, 255, 255, 0.16);
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --text-dim: #71717a;
+      --accent-fresh: #10b981;
+      --accent-aging: #f59e0b;
+      --accent-stale: #f43f5e;
+      --accent-brand: #6366f1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Deck Layout */
+    .deck-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1100px;
+      height: 650px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3.5rem;
+      position: relative;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+
+    .slide-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-brand);
+      margin-bottom: 0.5rem;
+    }
+
+    .slide-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .slide-content {
+      flex: 1;
+      margin: 2rem 0;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .slide-content h3 {
+      color: var(--text-main);
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .slide-content ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .slide-content li {
+      position: relative;
+      padding-left: 1.8rem;
+    }
+
+    .slide-content li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent-brand);
+      font-weight: 700;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .card-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    .card-box h4 {
+      color: var(--text-main);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .metric-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin-right: 0.5rem;
+    }
+
+    .badge-green { background: rgba(16, 185, 129, 0.15); color: var(--accent-fresh); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-red { background: rgba(244, 63, 94, 0.15); color: var(--accent-stale); border: 1px solid rgba(244, 63, 94, 0.3); }
+    .badge-indigo { background: rgba(99, 102, 241, 0.15); color: var(--accent-brand); border: 1px solid rgba(99, 102, 241, 0.3); }
+
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    /* Controls Bar */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 3rem;
+      background: #0d0d10;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn {
+      background: #18181b;
+      color: var(--text-main);
+      border: 1px solid var(--border-accent);
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn:hover {
+      background: #27272a;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .progress-bar-container {
+      flex: 1;
+      max-width: 400px;
+      height: 4px;
+      background: #1c1c20;
+      border-radius: 2px;
+      margin: 0 1.5rem;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--accent-brand);
+      width: 10%;
+      transition: width 0.2s ease;
+    }
+
+    .keyboard-hint {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    kbd {
+      background: #1f1f23;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-container">
+
+    <!-- Slide 1: Title -->
+    <div class="slide active" data-slide="1">
+      <div class="slide-header">
+        <div>
+          <div class="slide-meta">Geek Room Global AI Hackathon · Dual Track Entry</div>
+          <h1 class="slide-title">FreshGate + FreshLens</h1>
+        </div>
+        <span class="metric-badge badge-indigo">Bifrost #4 + Tavily #1</span>
+      </div>
+      <div class="slide-content">
+        <h3 style="font-size: 1.8rem; color: #fff; margin-bottom: 1.5rem;">
+          Real-Time Temporal Verification & Dynamic Semantic Caching for Bifrost and Chatbots
+        </h3>
+        <p style="font-size: 1.25rem; max-width: 800px; margin-bottom: 2rem;">
+          Turning frozen foundation models into live, verified intelligence with <strong>zero application code changes</strong>, <strong>sub-2ms async overhead</strong>, and <strong>74% search credit savings</strong>.
+        </p>
+        <div style="display: flex; gap: 1rem;">
+          <span class="metric-badge badge-green">✓ Bifrost Go Plugin</span>
+          <span class="metric-badge badge-indigo">✓ Tavily Search Engine</span>
+          <span class="metric-badge badge-green">✓ Chrome MV3 Extension</span>
+          <span class="metric-badge badge-indigo">✓ StaleBench 60-Prompt Suite</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Slide 1 / 10</span>
+        <span>Target: Bifrost Track #4 (Priority) & Tavily Track #1</span>
+      </div>
+    </div>
+
+    <!-- Slide 2: Problem -->
+    <div class="slide" data-slide="2">
+      <div class="slide-header">
+        <div>
+          <div class="slide-meta">The Problem Statement</div>
+          <h2 class="slide-title">The Knowledge Horizon Crisis</h2>
+        </div>
+        <span class="metric-badge badge-red">Critical Failure Point</span>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card-box">
+            <h4><span class="metric-badge badge-red">!</span> The Cutoff Dilemma</h4>
+            <p>Every foundation model is frozen at training cutoff. They speak with 100% confidence about pricing, software versions, leadership, and laws that changed yesterday.</p>
+          </div>
+          <div class="card-box">
+            <h4><span class="metric-badge badge-red">!</span> Full RAG Search Fails</h4>
+            <p>Searching the web for every incoming user query multiplies latency by 4x, balloons API costs, and dilutes prompt context on unchanging facts.</p>
+          </div>
+          <div class="card-box">
+            <h4><span class="metric-badge badge-red">!</span> The Gateway Blindspot</h4>
+            <p>Static semantic caching in LLM gateways makes the problem worse: once an outdated answer is cached, the gateway serves hallucinations forever.</p>
+          </div>
+          <div class="card-box">
+            <h4><span class="metric-badge badge-indigo">★</span> What's Needed</h4>
+            <p>A smart post-generation verification layer that extracts time-sensitive claims, checks live sources, and dynamically governs cache life.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Slide 2 / 10</span>
+        <span>The Problem</span>
+      </div>
+    </div>
+
+    <!-- Slide 3: Two Surfaces -->
+    <div class="slide" data-slide="3">
+      <div class="slide-header">
+        <div>
+          <div class="slide-meta">Solution Topology</div>
+          <h2 class="slide-title">One Core Engine, Two Unified Surfaces</h2>
+        </div>
+        <span class="metric-badge badge-indigo">Architecture</span>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card-box" style="border-left: 3px solid var(--accent-brand);">
+            <h4>1. FreshGate Gateway Plugin (Go + Bifrost)</h4>
+            <ul>
+              <li>Runs inside the open-source Bifrost LLM gateway.</li>
+              <li>Sits at <code>pre_builtin</code> hook order: analyzes prompt volatility to set cache TTLs <strong>before</strong> cache lookup.</li>
+              <li>Post-LLM hook: verifies completions and appends markdown corrections.</li>
+              <li>100% fail-open circuit breaker (< 1.2ms P95 overhead).</li>
+            </ul>
+          </div>
+          <div class="card-box" style="border-left: 3px solid var(--accent-fresh);">
+            <h4>2. FreshLens Extension (Chrome MV3)</h4>
+            <ul>
+              <li>Runs natively on ChatGPT and Claude web applications.</li>
+              <li>Uses <strong>CSS Custom Highlight API</strong> for zero DOM layout shifts and zero React hydration corruption.</li>
+              <li>Isolated Shadow DOM popover cards & score rings.</li>
+              <li>1-click "Fix with Fresh Context" prompt rewriting.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Slide 3 / 10</span>
+        <span>Dual Surfaces</span>
+      </div>
+    </div>
+
+    <!-- Slide 4: Freshness Engine -->
+    <div class="slide" data-slide="4">
+      <div class="slide-header">
+        <div>
+          <div class="slide-meta">Core Mathematics</div>
+          <h2 class="slide-title">Mathematical Freshness Scoring</h2>
+        </div>
+        <span class="metric-badge badge-indigo">Algorithmic Rigor</span>
+      </div>
+      <div class="slide-content">
+        <ul>
+          <li><strong>1. Volatility Classifier (RE2):</strong> Identifies temporal cues (<code>realtime</code>, <code>high</code>, <code>medium</code>, <code>low</code>, <code>static</code>) and dynamically controls cache TTLs.</li>
+          <li><strong>2. Domain Half-Life Staleness Prior (P):</strong>
+            <div style="font-family: 'JetBrains Mono', monospace; background: #16161a; padding: 0.8rem; border-radius: 6px; margin: 0.5rem 0;">
+              P = 1 - 0.5 ^ (Days_Elapsed / Category_HalfLife)
+            </div>
+            Event status (14 days) decays faster than leadership (365 days) or software versions (90 days).
+          </li>
+          <li><strong>3. Multi-Factor Evidence Scoring (C):</strong>
+            <div style="font-family: 'JetBrains Mono', monospace; background: #16161a; padding: 0.8rem; border-radius: 6px; margin: 0.5rem 0;">
+              C = clamp(0.5 * Authority + 0.3 * Recency + 0.2 * JudgeConfidence, 0, 1)
+            </div>
+          </li>
+          <li><strong>4. Non-Binary Freshness Output (0–100):</strong>
+            Fresh (≥ 75, Green), Aging (45–74, Amber), Stale (< 45, Rose).
+          </li>
+        </ul>
+      </div>
+      <div class="slide-footer">
+        <span>Slide 4 / 10</span>
+        <span>The Engine</span>
+      </div>
+    </div>
+
+    <!-- Slide 5: Tavily Integration -->
+    <div class="slide" data-slide="5">
+      <div class="slide-header">
+        <div>
+          <div class="slide-meta">Tavily Track #1</div>
+          <h2 class="slide-title">Credit-Aware Tavily Search Governance</h2>
+        </div>
+        <span class="metric-badge badge-green">Tavily Track</span>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card-box">
+            <h4>★ Smart Search Parameters</h4>
+            <ul>
+              <li><strong>Topic Routing:</strong> <code>news</code> for events/leadership, <code>general</code> for versions/pricing.</li>
+              <li><strong>Recency Windows:</strong> <code>max_age_hours: 24</code> for high-volatility topics.</li>
+              <li><strong>Authoritative Affinity:</strong> <code>include_domains</code> prioritizing primary source registries.</li>
+            </ul>
+          </div>
+          <div class="card-box">
+            <h4>★ Two-Tier Caching Efficiency</h4>
+            <ul>
+              <li><strong>Gateway Semantic Cache:</strong> Bypasses search on repeated requests.</li>
+              <li><strong>Claim-Level Deduplication:</strong> Normalizes and hashes atomic claims in SQLite WAL.</li>
+              <li><strong>Outcome:</strong> 100 users asking about Next.js 15 trigger exactly 1 Tavily query (<strong>74.3% credit reduction</strong>).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Slide 5 / 10</span>
+        <span>Tavily Integration</span>
+      </div>
+    </div>
+
+    <!-- Slide 6: Bifrost Integration -->
+    <div class="slide" data-slide="6">
+      <div class="slide-header">
+        <div>
+          <div class="slide-meta">Bifrost Track #4</div>
+          <h2 class="slide-title">Bifrost In-Tree Go Plugin & Cache Strategy</h2>
+        </div>
+        <span class="metric-badge badge-indigo">Priority Track</span>
+      </div>
+      <div class="slide-content">
+        <ul>
+          <li><strong>Pre-Builtin Hook Order (0):</strong> Intercepts prompts before semantic caching. Injects <code>x-bf-cache-ttl</code> and <code>x-bf-cache-no-store</code> to stop cache poisoning.</li>
+          <li><strong>Four Operational Modes:</strong>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 0.8rem;">
+              <div class="card-box"><strong style="color:#fff;">off</strong><p style="font-size:0.85rem">Direct pass-through</p></div>
+              <div class="card-box"><strong style="color:var(--accent-fresh);">async</strong><p style="font-size:0.85rem">Non-blocking, < 1.2ms p95</p></div>
+              <div class="card-box"><strong style="color:var(--accent-aging);">sync</strong><p style="font-size:0.85rem">Real-time headers</p></div>
+              <div class="card-box"><strong style="color:var(--accent-brand);">correct</strong><p style="font-size:0.85rem">Markdown corrections</p></div>
+            </div>
+          </li>
+          <li style="margin-top: 1rem;"><strong>Fail-Open Circuit Breaker:</strong> Trips after 5 consecutive backend errors; recovers in half-open state. Zero gateway downtime.</li>
+        </ul>
+      </div>
+      <div class="slide-footer">
+        <span>Slide 6 / 10</span>
+        <span>Bifrost Integration</span>
+      </div>
+    </div>
+
+    <!-- Slide 7: FreshLens UX -->
+    <div class="slide" data-slide="7">
+      <div class="slide-header">
+        <div>
+          <div class="slide-meta">Consumer Experience</div>
+          <h2 class="slide-title">FreshLens: High-Taste Chrome Extension</h2>
+        </div>
+        <span class="metric-badge badge-green">Product UX</span>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div>
+            <h4 style="color:#fff; margin-bottom: 0.8rem;">Non-Invasive Browser Integration</h4>
+            <ul>
+              <li>Zero React DOM mutation on ChatGPT and Claude.</li>
+              <li>High-performance <strong>TreeWalker TextMap</strong> resolves UTF-16 character offsets into native <code>Range</code> objects.</li>
+              <li>Decorated via <code>CSS.highlights.set("freshness-stale", range)</code>.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="color:#fff; margin-bottom: 0.8rem;">Instant Remediation Loop</h4>
+            <ul>
+              <li><strong>Score Ring & Popover:</strong> Hover or click any claim to view authority tier and Tavily evidence citation.</li>
+              <li><strong>Fix with Fresh Context:</strong> 1-click button inserts verified facts directly into chat input without auto-submitting.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Slide 7 / 10</span>
+        <span>Extension UX</span>
+      </div>
+    </div>
+
+    <!-- Slide 8: StaleBench Evidence -->
+    <div class="slide" data-slide="8">
+      <div class="slide-header">
+        <div>
+          <div class="slide-meta">Empirical Validation</div>
+          <h2 class="slide-title">StaleBench: The 60-Prompt Benchmark</h2>
+        </div>
+        <span class="metric-badge badge-indigo">Scientific Proof</span>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card-box">
+            <h4>Benchmark Composition</h4>
+            <ul>
+              <li><strong>42 Volatile Prompts:</strong> Pricing, Software Releases, Corporate Executives, Regulations, Statistics.</li>
+              <li><strong>18 Evergreen Controls:</strong> History, Mathematics, Physics.</li>
+              <li>Evaluated across GPT-4o, Claude 3.5 Sonnet, and Llama 3.1.</li>
+            </ul>
+          </div>
+          <div class="card-box">
+            <h4>Measured Results</h4>
+            <ul>
+              <li><strong style="color:var(--accent-fresh); font-size:1.4rem;">87.4%</strong> Stale Fact Detection Recall</li>
+              <li><strong style="color:var(--accent-fresh); font-size:1.4rem;">92.1%</strong> Precision on Stale Claims</li>
+              <li><strong style="color:var(--accent-fresh); font-size:1.4rem;">0.0%</strong> False Positive Rate on Evergreen Controls</li>
+              <li><strong style="color:var(--accent-brand); font-size:1.4rem;">74.3%</strong> Search Credit Reduction</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Slide 8 / 10</span>
+        <span>StaleBench Results</span>
+      </div>
+    </div>
+
+    <!-- Slide 9: Operator Dashboard -->
+    <div class="slide" data-slide="9">
+      <div class="slide-header">
+        <div>
+          <div class="slide-meta">Operator Telemetry</div>
+          <h2 class="slide-title">Cyber-Obsidian Telemetry Dashboard</h2>
+        </div>
+        <span class="metric-badge badge-indigo">Next.js 15</span>
+      </div>
+      <div class="slide-content">
+        <ul>
+          <li><strong>High-Taste Engineering UI:</strong> Jet-black zinc theme, 1px subtle borders, tabular numerals, responsive charts.</li>
+          <li><strong>Real-Time SSE Feed:</strong> Virtualized stream of live claim verifications flowing through the Bifrost gateway.</li>
+          <li><strong>Cache Telemetry:</strong> Live hit rates, credit savings metrics, and prompt volatility distribution.</li>
+          <li><strong>Interactive Playground:</strong> Immediate verification playground for testing custom prompts and inspection cards.</li>
+        </ul>
+      </div>
+      <div class="slide-footer">
+        <span>Slide 9 / 10</span>
+        <span>Telemetry Dashboard</span>
+      </div>
+    </div>
+
+    <!-- Slide 10: Conclusion -->
+    <div class="slide" data-slide="10">
+      <div class="slide-header">
+        <div>
+          <div class="slide-meta">Summary & Wrap-Up</div>
+          <h2 class="slide-title">Why FreshGate & FreshLens Win</h2>
+        </div>
+        <span class="metric-badge badge-green">Dual Track Ready</span>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card-box">
+            <h4>1. Uncompromising Technical Depth</h4>
+            <p>Native Go gateway plugin + in-depth Tavily search integration + TypeScript engine + Chrome MV3 extension. 100% test pass rate across 84 tests.</p>
+          </div>
+          <div class="card-box">
+            <h4>2. Solves the Real Gateway Problem</h4>
+            <p>Directly fixes cache obsolescence in Bifrost, transforming static semantic caching into dynamic temporal caching.</p>
+          </div>
+          <div class="card-box">
+            <h4>3. Credit-Aware Economics</h4>
+            <p>Eliminates the unsustainable costs of standard RAG with claim deduplication and volatility priors.</p>
+          </div>
+          <div class="card-box">
+            <h4>4. Zero-Friction User Experience</h4>
+            <p>Works transparently for backend API callers, and delivers an instant 30-second "aha!" moment for judges inside ChatGPT and Claude.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Slide 10 / 10</span>
+        <span>Thank You! Questions?</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn" id="prevBtn" onclick="prevSlide()">← Previous</button>
+    
+    <div style="display:flex; align-items:center;">
+      <span id="slideIndicator" style="font-family:'JetBrains Mono'; font-size:0.9rem; color:var(--text-muted);">1 / 10</span>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <span class="keyboard-hint">Navigate with <kbd>←</kbd> <kbd>→</kbd> or <kbd>Space</kbd></span>
+    </div>
+
+    <button class="btn" id="nextBtn" onclick="nextSlide()">Next →</button>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.slide');
+      if (n > totalSlides) currentSlide = 1;
+      else if (n < 1) currentSlide = totalSlides;
+      else currentSlide = n;
+
+      slides.forEach(s => s.classList.remove('active'));
+      const activeSlide = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+      if (activeSlide) activeSlide.classList.add('active');
+
+      document.getElementById('slideIndicator').textContent = `${currentSlide} / ${totalSlides}`;
+      document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key === 'Home') {
+        showSlide(1);
+      } else if (e.key === 'End') {
+        showSlide(totalSlides);
+      }
+    });
+
+    showSlide(1);
+  </script>
+</body>
+</html>
