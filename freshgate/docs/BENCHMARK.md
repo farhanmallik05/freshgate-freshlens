@@ -1,8 +1,8 @@
 # StaleBench v1.0 Evaluation Report & Statistical Analysis
 
-**Generated:** 2026-11-02T16:42:55.839Z  
-**Dataset Scope:** N = 10 prompts (42 volatile across 7 categories + 18 evergreen controls)  
-**Total Runs:** 30 evaluations across frontier & open-weight LLMs
+**Generated:** 2026-11-03T11:03:04.206Z  
+**Dataset Scope:** N = 60 prompts (42 volatile across 7 categories + 18 evergreen controls)  
+**Total Runs:** 180 evaluations across frontier & open-weight LLMs
 
 ---
 
@@ -21,9 +21,9 @@
 
 | Model | Knowledge Cutoff | Tested Items | Observed Stale Rate | FreshGate Detection Rate | Avg Freshness Score |
 |---|---|---|---|---|---|
-| **gpt-4o** | 2023-10 | 10 | 100.0% | 100.0% | 28/100 |
-| **claude-3-5-sonnet** | 2024-04 | 10 | 40.0% | 40.0% | 73/100 |
-| **llama-3.1-70b** | 2023-12 | 10 | 100.0% | 100.0% | 32/100 |
+| **gpt-4o** | 2023-10 | 60 | 20.0% | 20.0% | 81.6/100 |
+| **claude-3-5-sonnet** | 2024-04 | 60 | 10.0% | 10.0% | 89.5/100 |
+| **llama-3.1-70b** | 2023-12 | 60 | 53.3% | 53.3% | 61.4/100 |
 
 ---
 
@@ -32,7 +32,13 @@
 | Category | Total Evaluated | Stale Frequency | Average Freshness Index |
 |---|---|---|---|
 | **pricing** | 18 | 66.7% | 51.7/100 |
-| **version_release** | 12 | 100.0% | 33.3/100 |
+| **version_release** | 18 | 100.0% | 33.3/100 |
+| **leadership_role** | 18 | 33.3% | 74/100 |
+| **law_policy** | 18 | 16.7% | 84.5/100 |
+| **statistic_metric** | 18 | 27.8% | 77.5/100 |
+| **event_status** | 18 | 33.3% | 74/100 |
+| **record_ranking** | 18 | 0.0% | 95/100 |
+| **evergreen** | 54 | 0.0% | 95/100 |
 
 ---
 

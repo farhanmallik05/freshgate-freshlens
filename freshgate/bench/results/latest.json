@@ -1,7 +1,7 @@
 {
-  "evaluated_at": "2026-11-02T16:42:55.839Z",
-  "total_prompts": 10,
-  "total_runs": 30,
+  "evaluated_at": "2026-11-03T11:03:04.206Z",
+  "total_prompts": 60,
+  "total_runs": 180,
   "metrics": {
     "precision": 1,
     "recall": 1,
@@ -23,24 +23,24 @@
   "by_model": [
     {
       "model": "gpt-4o",
-      "total": 10,
-      "stale_rate": 1,
-      "detected_rate": 1,
-      "avg_freshness": 28
+      "total": 60,
+      "stale_rate": 0.2,
+      "detected_rate": 0.2,
+      "avg_freshness": 81.6
     },
     {
       "model": "claude-3-5-sonnet",
-      "total": 10,
-      "stale_rate": 0.4,
-      "detected_rate": 0.4,
-      "avg_freshness": 73
+      "total": 60,
+      "stale_rate": 0.1,
+      "detected_rate": 0.1,
+      "avg_freshness": 89.5
     },
     {
       "model": "llama-3.1-70b",
-      "total": 10,
-      "stale_rate": 1,
-      "detected_rate": 1,
-      "avg_freshness": 32
+      "total": 60,
+      "stale_rate": 0.533,
+      "detected_rate": 0.533,
+      "avg_freshness": 61.4
     }
   ],
   "by_category": [
@@ -52,9 +52,45 @@
     },
     {
       "category": "version_release",
-      "total": 12,
+      "total": 18,
       "stale_rate": 1,
       "avg_freshness": 33.3
+    },
+    {
+      "category": "leadership_role",
+      "total": 18,
+      "stale_rate": 0.333,
+      "avg_freshness": 74
+    },
+    {
+      "category": "law_policy",
+      "total": 18,
+      "stale_rate": 0.167,
+      "avg_freshness": 84.5
+    },
+    {
+      "category": "statistic_metric",
+      "total": 18,
+      "stale_rate": 0.278,
+      "avg_freshness": 77.5
+    },
+    {
+      "category": "event_status",
+      "total": 18,
+      "stale_rate": 0.333,
+      "avg_freshness": 74
+    },
+    {
+      "category": "record_ranking",
+      "total": 18,
+      "stale_rate": 0,
+      "avg_freshness": 95
+    },
+    {
+      "category": "evergreen",
+      "total": 54,
+      "stale_rate": 0,
+      "avg_freshness": 95
     }
   ]
 }
