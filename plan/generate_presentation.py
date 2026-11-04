@@ -12,17 +12,17 @@ def create_deck():
     prs.slide_height = Inches(7.5)
     blank_layout = prs.slide_layouts[6]
 
-    # Palette
-    C_BG = RGBColor(9, 9, 11)           # #09090b
-    C_CARD = RGBColor(18, 18, 21)        # #121215
-    C_BORDER = RGBColor(39, 39, 42)      # #27272a
-    C_TEXT = RGBColor(244, 244, 245)     # #f4f4f5
-    C_MUTED = RGBColor(161, 161, 170)    # #a1a1aa
-    C_DIM = RGBColor(113, 113, 122)      # #71717a
-    C_BRAND = RGBColor(99, 102, 241)     # #6366f1
-    C_FRESH = RGBColor(16, 185, 129)     # #10b981
-    C_STALE = RGBColor(244, 63, 94)      # #f43f5e
-    C_AGING = RGBColor(245, 158, 11)     # #f59e0b
+    # Premium Light Mode Palette (Crisp Swiss / Editorial Minimalist)
+    C_BG = RGBColor(250, 250, 250)        # #fafafa - pure clean canvas
+    C_CARD = RGBColor(255, 255, 255)      # #ffffff - elevated crisp white card
+    C_BORDER = RGBColor(228, 228, 231)    # #e4e4e7 - subtle zinc-200 border
+    C_TEXT = RGBColor(24, 24, 27)         # #18181b - deep zinc-900 typography
+    C_MUTED = RGBColor(82, 82, 91)        # #52525b - clear readable zinc-600 body
+    C_DIM = RGBColor(113, 113, 122)       # #71717a - zinc-500 footer & metadata
+    C_BRAND = RGBColor(79, 70, 229)       # #4f46e5 - rich indigo-600 accent
+    C_FRESH = RGBColor(5, 150, 105)       # #059669 - deep emerald-600
+    C_STALE = RGBColor(225, 29, 72)       # #e11d48 - vivid rose-600
+    C_AGING = RGBColor(217, 119, 6)       # #d97706 - warm amber-600
 
     def add_base_slide(meta_text, title_text, slide_num):
         slide = prs.slides.add_slide(blank_layout)
@@ -72,7 +72,7 @@ def create_deck():
         card.fill.solid()
         card.fill.fore_color.rgb = C_CARD
         card.line.color.rgb = C_BORDER
-        card.line.width = Pt(1)
+        card.line.width = Pt(1.5)
 
         tb = slide.shapes.add_textbox(Inches(left + 0.25), Inches(top + 0.2), Inches(width - 0.5), Inches(height - 0.4))
         tf = tb.text_frame
@@ -95,7 +95,7 @@ def create_deck():
             p.space_after = Pt(8)
 
     # ----------------------------------------------------
-    # SLIDE 1: Title
+    # SLIDE 1: Title (Light Mode)
     # ----------------------------------------------------
     s1 = prs.slides.add_slide(blank_layout)
     bg1 = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, prs.slide_width, prs.slide_height)
@@ -279,9 +279,9 @@ def create_deck():
     # ----------------------------------------------------
     # SLIDE 9: Operator Dashboard
     # ----------------------------------------------------
-    s9 = add_base_slide("Operator Telemetry", "Next.js 15 Operator Dashboard (Cyber-Obsidian)", 9)
-    add_card(s9, 0.8, 2.0, 5.6, 4.4, "High-Taste Cockpit Interface", [
-        "Cyber-Obsidian Aesthetic: Jet-black zinc foundation (#09090b), 1px crisp borders, tabular numerals.",
+    s9 = add_base_slide("Operator Telemetry", "Next.js 15 Operator Dashboard (Telemetry Cockpit)", 9)
+    add_card(s9, 0.8, 2.0, 5.6, 4.4, "Clean High-Contrast Cockpit Interface", [
+        "Editorial Minimalist Aesthetic: Crisp typographic hierarchy, 1px subtle borders, tabular numerals.",
         "Live SSE Feed: Virtualized real-time stream of claims verified through the Bifrost gateway.",
         "Cache Telemetry: Live hit rate gauges, credit savings calculators, and volatility breakdown.",
         "Accessible Architecture: WCAG AA contrast, keyboard navigation, and screen-reader announcements."
@@ -311,9 +311,17 @@ def create_deck():
         "• One-Click Launchers: start-demo.bat and start-demo.sh"
     ])
 
-    output_path = os.path.join(os.path.dirname(__file__), "FreshGate_FreshLens_Presentation.pptx")
+    output_path = os.path.join(os.path.dirname(__file__), "FreshGate_FreshLens_Presentation_Light.pptx")
     prs.save(output_path)
     print(f"Presentation saved successfully to: {output_path}")
+
+    # Also attempt to update the main pptx file if not locked
+    main_path = os.path.join(os.path.dirname(__file__), "FreshGate_FreshLens_Presentation.pptx")
+    try:
+        prs.save(main_path)
+        print(f"Main presentation updated successfully at: {main_path}")
+    except PermissionError:
+        print("Note: FreshGate_FreshLens_Presentation.pptx is currently open in PowerPoint; saved to FreshGate_FreshLens_Presentation_Light.pptx")
 
 if __name__ == "__main__":
     create_deck()

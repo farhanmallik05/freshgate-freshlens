@@ -22,6 +22,55 @@
       --accent-brand: #6366f1;
     }
 
+    body.light-theme {
+      --bg: #fafafa;
+      --card-bg: #ffffff;
+      --border: rgba(0, 0, 0, 0.08);
+      --border-accent: rgba(0, 0, 0, 0.15);
+      --text-main: #18181b;
+      --text-muted: #52525b;
+      --text-dim: #71717a;
+      --accent-fresh: #059669;
+      --accent-aging: #d97706;
+      --accent-stale: #e11d48;
+      --accent-brand: #4f46e5;
+    }
+
+    body.light-theme .controls {
+      background: #f4f4f5;
+      border-top-color: rgba(0, 0, 0, 0.08);
+    }
+
+    body.light-theme .btn {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.12);
+      color: #18181b;
+    }
+
+    body.light-theme .btn:hover {
+      background: #f4f4f5;
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    body.light-theme .progress-bar-container {
+      background: #e4e4e7;
+    }
+
+    body.light-theme .card-box {
+      background: #fafafa;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    body.light-theme .slide {
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+    }
+
+    body.light-theme kbd {
+      background: #e4e4e7;
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #3f3f46;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -580,7 +629,10 @@
 
   <!-- Controls -->
   <div class="controls">
-    <button class="btn" id="prevBtn" onclick="prevSlide()">← Previous</button>
+    <div style="display:flex; gap:0.5rem; align-items:center;">
+      <button class="btn" id="prevBtn" onclick="prevSlide()">← Previous</button>
+      <button class="btn" id="themeBtn" onclick="toggleTheme()">☀️ Light Mode</button>
+    </div>
     
     <div style="display:flex; align-items:center;">
       <span id="slideIndicator" style="font-family:'JetBrains Mono'; font-size:0.9rem; color:var(--text-muted);">1 / 10</span>
@@ -596,6 +648,13 @@
   <script>
     let currentSlide = 1;
     const totalSlides = 10;
+    let isLight = false;
+
+    function toggleTheme() {
+      isLight = !isLight;
+      document.body.classList.toggle('light-theme', isLight);
+      document.getElementById('themeBtn').textContent = isLight ? '🌙 Dark Mode' : '☀️ Light Mode';
+    }
 
     function showSlide(n) {
       const slides = document.querySelectorAll('.slide');
