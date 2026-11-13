@@ -100,7 +100,7 @@ FreshGate and FreshLens provide a unified anti-staleness architecture across two
 
 ## 9. Try It Out (Links & Instructions)
 
-- **GitHub Repository:** `d:\AI-Lab\Hackathon\Global AI Hackathon`
+- **GitHub Repository:** `https://github.com/farhanmallik05/freshgate-freshlens`
 - **Dashboard Telemetry:** `http://localhost:3000/overview`
 - **FreshLens Chrome Extension Package:** [`freshlens/.output/freshlens-1.0.0-chrome.zip`](freshlens/.output/freshlens-1.0.0-chrome.zip)
 - **Demo Script & Video Playbook:** [`plan/PITCH.md`](plan/PITCH.md)
