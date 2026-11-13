@@ -38,3 +38,7 @@ Thumbs.db
 *.swp
 *.swo
 .idea/
+
+# Agent scratch & memory
+.agents/
+
